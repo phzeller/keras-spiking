@@ -112,7 +112,7 @@ jobs:
       - uses: nengo/nengo-bones/actions/coverage-report@main
   deploy:
     needs:
-      - test-advanced
+      - docs
     if: >-
       startsWith(github.ref_name, 'release-candidate-') ||
       (github.ref_type == 'tag' && startsWith(github.ref_name, 'v'))
