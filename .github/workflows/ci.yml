@@ -56,16 +56,11 @@ jobs:
         with:
           name: coverage-${{ matrix.coverage-name }}
           path: .coverage
-  test-advanced:
+  examples:
     needs:
-      - test
+      - static
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        include:
-          - script: remote-docs
-          - script: remote-examples
     env:
       NUMPY_VERSION: numpy>=1.16.
       TF_VERSION: tensorflow==2.9
@@ -83,7 +78,30 @@ jobs:
       - uses: nengo/nengo-bones/actions/generate-and-check@main
       - uses: nengo/nengo-bones/actions/run-script@main
         with:
-          name: ${{ matrix.script }}
+          name: remote-examples
+  docs:
+    needs:
+      - examples
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    env:
+      NUMPY_VERSION: numpy>=1.16.
+      TF_VERSION: tensorflow==2.9
+      SSH_KEY: ${{ secrets.SSH_KEY }}
+      SSH_CONFIG: ${{ secrets.SSH_CONFIG }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - uses: nengo/nengo-bones/actions/setup@main
+        with:
+          python-version: "3.8"
+      - name: Write secrets to file
+        run: |
+          mkdir -p ~/.ssh
+          echo '${{ secrets.AZURE_PEM }}' > ~/.ssh/azure.pem
+      - uses: nengo/nengo-bones/actions/generate-and-check@main
+      - uses: nengo/nengo-bones/actions/run-script@main
+        with:
+          name: remote-docs
   coverage:
     runs-on: ubuntu-latest
     timeout-minutes: 10
