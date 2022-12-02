@@ -38,7 +38,7 @@ jobs:
             coverage-name: min-deps
             tf-version: tensorflow==2.1.0
             numpy-version: numpy==1.16.0
-            python: "3.6"
+            python: "3.7"
       fail-fast: false
     env:
       NUMPY_VERSION: ${{ matrix.numpy-version || 'numpy>=1.16.0' }}
