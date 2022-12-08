@@ -35,18 +35,18 @@ jobs:
           - script: test
             coverage-name: basic
           - script: test
-            coverage-name: min-deps
+            coverage-name: oldest
             tf-version: tensorflow==2.1.0
             numpy-version: numpy==1.16.0
             python: "3.7"
       fail-fast: false
     env:
       NUMPY_VERSION: ${{ matrix.numpy-version || 'numpy>=1.16.0' }}
-      TF_VERSION: ${{ matrix.tf-version || 'tensorflow==2.9' }}
+      TF_VERSION: ${{ matrix.tf-version || 'tensorflow' }}
     steps:
       - uses: nengo/nengo-bones/actions/setup@main
         with:
-          python-version: ${{ matrix.python || '3.8' }}
+          python-version: ${{ matrix.python || '3.9' }}
       - uses: nengo/nengo-bones/actions/generate-and-check@main
       - uses: nengo/nengo-bones/actions/run-script@main
         with:
@@ -62,8 +62,8 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     env:
-      NUMPY_VERSION: numpy>=1.16.
-      TF_VERSION: tensorflow==2.9
+      NUMPY_VERSION: numpy>=1.16.0
+      TF_VERSION: tensorflow
       SSH_KEY: ${{ secrets.SSH_KEY }}
       SSH_CONFIG: ${{ secrets.SSH_CONFIG }}
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -85,8 +85,8 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     env:
-      NUMPY_VERSION: numpy>=1.16.
-      TF_VERSION: tensorflow==2.9
+      NUMPY_VERSION: numpy>=1.16.0
+      TF_VERSION: tensorflow
       SSH_KEY: ${{ secrets.SSH_KEY }}
       SSH_CONFIG: ${{ secrets.SSH_CONFIG }}
       GH_TOKEN: ${{ secrets.GH_TOKEN }}

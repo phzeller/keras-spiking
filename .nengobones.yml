@@ -56,10 +56,14 @@ ci_scripts:
     pip_install:
       - $TF_VERSION
       - $NUMPY_VERSION
+    pre_commands:
+      - python -c "import tensorflow as tf; assert tf.test.is_gpu_available()"
   - template: examples
     pip_install:
       - $TF_VERSION
       - $NUMPY_VERSION
+    pre_commands:
+      - python -c "import tensorflow as tf; assert tf.test.is_gpu_available()"
   - template: remote-script
     remote_script: docs
     output_name: remote-docs
@@ -70,8 +74,7 @@ ci_scripts:
       NUMPY_VERSION: $NUMPY_VERSION
       TF_VERSION: $TF_VERSION
     remote_setup:
-      - conda install -yq -c conda-forge tensorflow-gpu
-      - export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:\$CONDA_PREFIX/lib
+      - conda install -yq -c conda-forge --override-channels "$TF_VERSION"
   - template: remote-script
     remote_script: examples
     output_name: remote-examples
@@ -82,8 +85,7 @@ ci_scripts:
       NUMPY_VERSION: $NUMPY_VERSION
       TF_VERSION: $TF_VERSION
     remote_setup:
-      - conda install -yq -c conda-forge tensorflow-gpu
-      - export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:\$CONDA_PREFIX/lib
+      - conda install -yq -c conda-forge --override-channels "$TF_VERSION"
   - template: deploy
     wheel: true
 
