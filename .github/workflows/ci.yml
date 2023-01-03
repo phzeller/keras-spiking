@@ -63,7 +63,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NUMPY_VERSION: numpy>=1.16.0
-      TF_VERSION: tensorflow
+      TF_VERSION: tensorflow==2.10
       SSH_KEY: ${{ secrets.SSH_KEY }}
       SSH_CONFIG: ${{ secrets.SSH_CONFIG }}
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -86,7 +86,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NUMPY_VERSION: numpy>=1.16.0
-      TF_VERSION: tensorflow
+      TF_VERSION: tensorflow==2.10
       SSH_KEY: ${{ secrets.SSH_KEY }}
       SSH_CONFIG: ${{ secrets.SSH_CONFIG }}
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
