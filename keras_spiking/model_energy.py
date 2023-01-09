@@ -164,7 +164,7 @@ class ModelEnergy:
        https://ieeexplore.ieee.org/abstract/document/7054508
     .. [2] Davies, Mike, et al. "Loihi: A neuromorphic manycore processor with on-chip
        learning." IEEE Micro 38.1 (2018): 82-99.
-       https://www.researchgate.net/publication/322548911_Loihi_A_Neuromorphic_Manycore_Processor_with_On-Chip_Learning
+       https://redwood.berkeley.edu/wp-content/uploads/2021/08/Davies2018.pdf
     .. [3] Höppner, Sebastian, et al. "Dynamic power management for neuromorphic
        many-core systems." IEEE Transactions on Circuits and Systems I: Regular Papers
        66.8 (2019): 2973-2986. https://arxiv.org/abs/1903.08941
@@ -176,7 +176,7 @@ class ModelEnergy:
         "cpu": dict(spiking=False, energy_per_synop=8.6e-9, energy_per_neuron=8.6e-9),
         "gpu": dict(spiking=False, energy_per_synop=0.3e-9, energy_per_neuron=0.3e-9),
         "arm": dict(spiking=False, energy_per_synop=0.9e-9, energy_per_neuron=0.9e-9),
-        # https://www.researchgate.net/publication/322548911_Loihi_A_Neuromorphic_Manycore_Processor_with_On-Chip_Learning
+        # https://redwood.berkeley.edu/wp-content/uploads/2021/08/Davies2018.pdf
         "loihi": dict(
             spiking=True,
             energy_per_synop=(23.6 + 3.5) * 1e-12,
