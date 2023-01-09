@@ -56,11 +56,17 @@ jobs:
         with:
           name: coverage-${{ matrix.coverage-name }}
           path: .coverage
-  examples:
+  remote:
     needs:
       - static
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - script: remote-examples
+          - script: remote-docs
+      fail-fast: false
     env:
       NUMPY_VERSION: numpy>=1.16.0
       TF_VERSION: tensorflow==2.10
@@ -78,30 +84,7 @@ jobs:
       - uses: nengo/nengo-bones/actions/generate-and-check@main
       - uses: nengo/nengo-bones/actions/run-script@main
         with:
-          name: remote-examples
-  docs:
-    needs:
-      - examples
-    timeout-minutes: 60
-    runs-on: ubuntu-latest
-    env:
-      NUMPY_VERSION: numpy>=1.16.0
-      TF_VERSION: tensorflow==2.10
-      SSH_KEY: ${{ secrets.SSH_KEY }}
-      SSH_CONFIG: ${{ secrets.SSH_CONFIG }}
-      GH_TOKEN: ${{ secrets.GH_TOKEN }}
-    steps:
-      - uses: nengo/nengo-bones/actions/setup@main
-        with:
-          python-version: "3.8"
-      - name: Write secrets to file
-        run: |
-          mkdir -p ~/.ssh
-          echo '${{ secrets.AZURE_PEM }}' > ~/.ssh/azure.pem
-      - uses: nengo/nengo-bones/actions/generate-and-check@up-doc-reqs
-      - uses: nengo/nengo-bones/actions/run-script@main
-        with:
-          name: remote-docs
+          name: ${{ matrix.script }}
   coverage:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -112,7 +95,7 @@ jobs:
       - uses: nengo/nengo-bones/actions/coverage-report@main
   deploy:
     needs:
-      - docs
+      - remote
     if: >-
       startsWith(github.ref_name, 'release-candidate-') ||
       (github.ref_type == 'tag' && startsWith(github.ref_name, 'v'))
