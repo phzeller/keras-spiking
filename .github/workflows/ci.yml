@@ -98,7 +98,7 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           echo '${{ secrets.AZURE_PEM }}' > ~/.ssh/azure.pem
-      - uses: nengo/nengo-bones/actions/generate-and-check@main
+      - uses: nengo/nengo-bones/actions/generate-and-check@up-doc-reqs
       - uses: nengo/nengo-bones/actions/run-script@main
         with:
           name: remote-docs
